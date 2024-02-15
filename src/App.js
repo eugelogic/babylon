@@ -57,7 +57,7 @@ class App extends Component {
           <div
             className="button"
             onClick={(e) => {
-              this.setState({ selectedAppointmentType: 'Therapist' });
+              this.setState({ selectedAppointmentType: 'therapist' });
             }}
           >
             Therapist
@@ -65,7 +65,7 @@ class App extends Component {
           <div
             className="button"
             onClick={(e) => {
-              this.setState({ selectedAppointmentType: 'Physio' });
+              this.setState({ selectedAppointmentType: 'physio' });
             }}
           >
             Physio
