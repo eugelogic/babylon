@@ -27,10 +27,6 @@ class App extends Component {
       });
   }
 
-  onClick() {
-    this.setState({ selectedAppointmentType: 'gp' });
-  }
-
   render() {
     // calculate matching slots
     let slots = [];
@@ -51,7 +47,13 @@ class App extends Component {
           <img src={logo} className="app-logo" alt="Babylon Health" />
         </div>
         <div style={{ maxWidth: 600, margin: '24px auto' }}>
-          <div className="button" id="GP-button">
+          <div
+            className="button"
+            id="GP-button"
+            onClick={(e) => {
+              this.setState({ selectedAppointmentType: 'gp' });
+            }}
+          >
             GP
           </div>
           <div
