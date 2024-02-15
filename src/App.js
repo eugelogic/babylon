@@ -11,7 +11,7 @@ class App extends Component {
 
     this.state = {
       userId: 1,
-      selectedAppointmentType: 'gp',
+      selectedConsultantType: 'gp',
       availableSlots: [],
     };
   }
@@ -33,7 +33,7 @@ class App extends Component {
     for (let i = 0; i < this.state.availableSlots.length; i++) {
       for (let j = 0; j < this.state.availableSlots[i]['consultantType'].length; j++) {
         if (
-          this.state.availableSlots[i]['consultantType'][j] === this.state.selectedAppointmentType
+          this.state.availableSlots[i]['consultantType'][j] === this.state.selectedConsultantType
         ) {
           slots.push(this.state.availableSlots[i]);
         }
@@ -51,7 +51,7 @@ class App extends Component {
             className="button"
             id="GP-button"
             onClick={(e) => {
-              this.setState({ selectedAppointmentType: 'gp' });
+              this.setState({ selectedConsultantType: 'gp' });
             }}
           >
             GP
@@ -59,7 +59,7 @@ class App extends Component {
           <div
             className="button"
             onClick={(e) => {
-              this.setState({ selectedAppointmentType: 'therapist' });
+              this.setState({ selectedConsultantType: 'therapist' });
             }}
           >
             Therapist
@@ -67,7 +67,7 @@ class App extends Component {
           <div
             className="button"
             onClick={(e) => {
-              this.setState({ selectedAppointmentType: 'physio' });
+              this.setState({ selectedConsultantType: 'physio' });
             }}
           >
             Physio
@@ -75,7 +75,7 @@ class App extends Component {
           <div
             className="button"
             onClick={(e) => {
-              this.setState({ selectedAppointmentType: 'specialist' });
+              this.setState({ selectedConsultantType: 'specialist' });
             }}
           >
             Specialist
