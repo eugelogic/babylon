@@ -1,117 +1,104 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import logo from './logo.png';
 import { API_ENDPOINT } from './config';
 
 import './App.scss';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+function App() {
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [consultantType, setConsultantType] = useState('gp');
 
-    this.state = {
-      userId: 1,
-      selectedConsultantType: 'gp',
-      availableSlots: [],
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     fetch(`${API_ENDPOINT}/availableSlots`)
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({ availableSlots: json });
-      })
+      .then((response) => response.json())
+      .then((data) => setAvailableSlots(data))
       .catch(() => {
-        // TODO: Handle error here
+        // to do: handle error
       });
-  }
+  }, []);
 
-  render() {
-    // calculate matching slots
-    let slots = [];
-    for (let i = 0; i < this.state.availableSlots.length; i++) {
-      for (let j = 0; j < this.state.availableSlots[i]['consultantType'].length; j++) {
-        if (
-          this.state.availableSlots[i]['consultantType'][j] === this.state.selectedConsultantType
-        ) {
-          slots.push(this.state.availableSlots[i]);
-        }
+  // calculate matching available slots
+  let slots = [];
+  for (let i = 0; i < availableSlots.length; i++) {
+    for (let j = 0; j < availableSlots[i]['consultantType'].length; j++) {
+      if (availableSlots[i]['consultantType'][j] === consultantType) {
+        slots.push(availableSlots[i]);
       }
     }
+  }
 
-    return (
-      <div className="app">
-        <h2 className="h6">New appointment</h2>
-        <div className="app-header">
-          <img src={logo} className="app-logo" alt="Babylon Health" />
+  return (
+    <div className="app">
+      <h2 className="h6">New appointment</h2>
+      <div className="app-header">
+        <img src={logo} className="app-logo" alt="Babylon Health" />
+      </div>
+      <div style={{ maxWidth: 600, margin: '24px auto' }}>
+        <div
+          className="button"
+          id="GP-button"
+          onClick={() => {
+            setConsultantType('gp');
+          }}
+        >
+          GP
         </div>
-        <div style={{ maxWidth: 600, margin: '24px auto' }}>
-          <div
-            className="button"
-            id="GP-button"
-            onClick={(e) => {
-              this.setState({ selectedConsultantType: 'gp' });
-            }}
-          >
-            GP
-          </div>
-          <div
-            className="button"
-            onClick={(e) => {
-              this.setState({ selectedConsultantType: 'therapist' });
-            }}
-          >
-            Therapist
-          </div>
-          <div
-            className="button"
-            onClick={(e) => {
-              this.setState({ selectedConsultantType: 'physio' });
-            }}
-          >
-            Physio
-          </div>
-          <div
-            className="button"
-            onClick={(e) => {
-              this.setState({ selectedConsultantType: 'specialist' });
-            }}
-          >
-            Specialist
-          </div>
-          <div>
-            <strong>Appointments</strong>
-            {slots.map((slot) => (
-              <li
-                key={slot.id}
-                className="appointment-button"
-                onClick={() => {
-                  this.setState({ selectedAppointment: slot });
-                }}
-              >
-                {slot.time}
-              </li>
-            ))}
-          </div>
-          <div>
-            <strong>Notes</strong>
-            <textarea />
-          </div>
-          <div>
-            <div
-              className="button"
+        <div
+          className="button"
+          onClick={() => {
+            setConsultantType('therapist');
+          }}
+        >
+          Therapist
+        </div>
+        <div
+          className="button"
+          onClick={() => {
+            setConsultantType('physio');
+          }}
+        >
+          Physio
+        </div>
+        <div
+          className="button"
+          onClick={() => {
+            setConsultantType('specialist');
+          }}
+        >
+          Specialist
+        </div>
+        <div>
+          <strong>Appointments</strong>
+          {slots.map((slot) => (
+            <li
+              key={slot.id}
+              className="appointment-button"
               onClick={() => {
-                /* TODO: submit the data */
+                setAvailableSlots(slot);
               }}
             >
-              Book appointment
-            </div>
+              {slot.time}
+            </li>
+          ))}
+        </div>
+        <div>
+          <strong>Notes</strong>
+          <textarea />
+        </div>
+        <div>
+          <div
+            className="button"
+            onClick={() => {
+              /* TODO: submit the data */
+            }}
+          >
+            Book appointment
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;
